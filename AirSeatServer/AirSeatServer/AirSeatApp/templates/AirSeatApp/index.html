@@ -1,0 +1,18 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'AirSeatApp/style.css' %}" />
+	{% if kkkk == 0 %}
+   	<div class="alert alert-error">
+        <strong>No Record Found</strong>
+    </div>
+	{% endif %}
+	
+{% if aircraft_list %}
+    <ul> 
+    {% for aircraft in aircraft_list %}
+        <li><a href="{% url 'AirSeatApp:detail' aircraft.id %}">{{ aircraft.depart_airport }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No aircraft.</p>
+{% endif %}
