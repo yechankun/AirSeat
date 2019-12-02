@@ -1,9 +1,0 @@
-<h1>{{ aircraft.depart_airport }}</h1>
-
-<ul>
-{% for seat in aircraft.seat_set.all %}
-    <li>{{ seat.seat_num }} -- {{ seat.reservatied }} vote{{ seat.reservatied|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'AirSeatApp:detail' aircraft.id %}">Vote again?</a>

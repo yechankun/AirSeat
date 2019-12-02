@@ -5,14 +5,14 @@
 
 {% block content %}
 
-    <h4>{% trans 'Change profile' %}</h4>
+    <h4>정보 수정</h4>
 
     <form method="post">
 
         {% csrf_token %}
         {% bootstrap_form form %}
 
-        <button class="btn btn-success">{% trans 'Change' %}</button>
+        <button class="btn btn-success">변경사항 적용</button>
 
     </form>
 

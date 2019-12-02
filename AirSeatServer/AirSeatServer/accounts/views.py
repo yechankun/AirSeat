@@ -75,6 +75,9 @@ class LogInView(GuestOnlyView, FormView):
  
         if url_is_safe:
             return redirect(redirect_to)
+        if 'session_temp' in request.session:
+            if request.session['session_temp'] == True:
+                return redirect('payment')
  
         return redirect(settings.LOGIN_REDIRECT_URL)
 

@@ -11,16 +11,19 @@ from django.db import models
 
 
 class Aircraft(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    depart_airport = models.CharField(max_length=45)
-    arrive_airport = models.CharField(max_length=45)
-    depart_time = models.DateField()
-    arrive_time = models.DateField()
-    price = models.BigIntegerField()
+    id_type = models.CharField(primary_key=True, max_length=20)
 
     class Meta:
         managed = False
         db_table = 'aircraft'
+
+
+class Airport(models.Model):
+    location = models.CharField(primary_key=True, max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'airport'
 
 
 class AuthGroup(models.Model):
@@ -56,17 +59,17 @@ class AuthPermission(models.Model):
 
 
 class AuthUser(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    password = models.CharField(max_length=128, blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+    password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.BooleanField()
-    username = models.CharField(unique=True, max_length=150, blank=True, null=True)
+    is_superuser = models.NullBooleanField()
+    username = models.CharField(unique=True, max_length=45)
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
     email = models.CharField(max_length=254, blank=True, null=True)
-    is_staff = models.BooleanField()
-    is_active = models.BooleanField()
-    date_joined = models.DateTimeField()
+    is_staff = models.NullBooleanField()
+    is_active = models.NullBooleanField()
+    date_joined = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -142,36 +145,37 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Order(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    id_passenger = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_passenger')
+class FlightSchedule(models.Model):
+    id = models.FloatField(primary_key=True)
     id_aircraft = models.ForeignKey(Aircraft, models.DO_NOTHING, db_column='id_aircraft')
-    id_seat = models.ForeignKey('Seat', models.DO_NOTHING, db_column='id_seat')
+    depart_airport = models.ForeignKey(Airport, models.DO_NOTHING, db_column='depart_airport', related_name='FLIGHT_SCHEDULE_FK_AIRPORT1')
+    arrive_airport = models.ForeignKey(Airport, models.DO_NOTHING, db_column='arrive_airport', related_name='FLIGHT_SCHEDULE_FK_AIRPORT2')
+    depart_time = models.DateTimeField()
+    arrive_time = models.DateTimeField()
+    economy_price = models.FloatField()
+    business_price = models.FloatField()
+
+    class Meta:
+        managed = False
+        db_table = 'flight_schedule'
+
+
+class Order(models.Model):
+    id_seat = models.ForeignKey('Seat', models.DO_NOTHING, db_column='id_seat', primary_key=True)
+    id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
+    is_adult = models.BooleanField()
 
     class Meta:
         managed = False
         db_table = 'order'
 
 
-class Passenger(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    id_user = models.CharField(max_length=45)
-    pw = models.CharField(max_length=45)
-    email = models.CharField(max_length=45)
-    name = models.CharField(max_length=45)
-    age = models.BigIntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'passenger'
-
-
 class Seat(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    id_aircraft = models.ForeignKey(Aircraft, models.DO_NOTHING, db_column='id_aircraft')
-    seat_col = models.CharField(max_length=10)
-    seat_num = models.BigIntegerField()
-    seat_grade = models.BigIntegerField()
+    id = models.FloatField(primary_key=True)
+    id_flight = models.ForeignKey(FlightSchedule, models.DO_NOTHING, db_column='id_flight')
+    seat_col = models.CharField(max_length=1)
+    seat_num = models.IntegerField()
+    seat_grade = models.BooleanField()
     reservatied = models.CharField(max_length=1)
 
     class Meta:

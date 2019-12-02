@@ -1,0 +1,63 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+	<!-- <div role="main" class="ui-content">
+	
+				<ul data-role="listview" data-filter="true" data-inset="true">
+	
+					<li><a href="#">방화</a></li>
+	
+					<li><a href="#">개화산</a></li>
+	
+					<li><a href="#">마곡</a></li>
+	
+					<li><a href="#">발산</a></li>
+	
+					<li><a href="#">마포</a></li>
+	
+					<li><a href="#">서대문</a></li>
+	
+					<li><a href="#">신길</a></li>
+	
+					<li><a href="#">신금호</a></li>
+	
+					<li><a href="#">여의도</a></li>
+	
+					<li><a href="#">여의나루</a></li>
+				</ul>
+	</div>
+	 -->
+	
+	
+	<style>
+		#outerdiv
+		{
+		   width:693px;
+		   height:500px;
+		   overflow:hidden;
+		   position:relative;
+		}
+		
+		#inneriframe
+		{
+		   position:absolute;
+		   top:-80px;
+		   left:-485px;
+		   width:1280px;
+		   height:1200px;
+		   overflow-y: scroll
+		}
+	</style>
+	<div id="outerdiv">
+	    <iframe src="{{naver_url}}" id="inneriframe" scrolling=""></iframe>
+	</div>
+	
+	<form method="post" id="choice_form">
+        {% csrf_token %}
+		{% bootstrap_form form %}
+       	
+        <button class="btn btn-primary">선택</button>
+    </form>
+{% endblock %}

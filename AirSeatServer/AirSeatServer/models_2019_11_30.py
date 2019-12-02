@@ -163,8 +163,8 @@ class FlightSchedule(models.Model):
 class Order(models.Model):
     id_seat = models.ForeignKey('Seat', models.DO_NOTHING, db_column='id_seat', primary_key=True)
     id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
+    id_flight_schedule = models.ForeignKey(FlightSchedule, models.DO_NOTHING, db_column='id_flight_schedule')
     is_adult = models.BooleanField()
-    price = models.FloatField()
 
     class Meta:
         managed = False

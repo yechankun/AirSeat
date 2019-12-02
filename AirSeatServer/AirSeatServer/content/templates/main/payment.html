@@ -1,0 +1,71 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+	<dev class='status'>
+		<div>유형: {{select_round_or_one}}</div>
+	    <div>좌석등급: {{seat_grade}}</div>
+	    <div>성인: {{adult_count}}명, 소아: {{youth_count}}명, 유아: {{ baby_count }}명</div>
+	    <div>출발지: {{depart_airport}}  도착지: {{arrive_airport}}</div>
+	    <div>가는편 비행기: {{choice_aircraft_id}}</div>    	
+		<div>가는편 좌석:
+		{% for item in choice_seat_col_num %}
+			{{ item }} 
+			{% if not forloop.last %}
+			,
+			{% endif %}		
+		{% endfor %}
+		</div>
+		<div>가는날: {{go_depart_time}}</div>
+		{% if select_round_or_one == "왕복"%}
+			<div>오는편 비행기: {{choice_aircraft_id2}}</div>
+	      	<div>오는편 좌석:
+			{% for item in choice_seat_col_num2 %}
+				{{ item }} 
+				{% if not forloop.last %}
+				,
+				{% endif %}
+				
+			{% endfor %}
+			</div>
+			<div>오는날: {{back_depart_time}}</div>
+	    {% endif %}
+    </dev>
+    
+    <div class='result_price'>
+	    <div class='header'> 가격 </div>
+	    <div> 가는편</div>
+	    <div>+어른 {{go_adult_price}}원 * {{adult_count}}명 </div>
+	    
+	    {% if youth_count > 0%}
+	    <div>+소아 {{go_youth_price}}원 * {{youth_count}}명 </div>
+	    {% endif %}
+	    
+	    {% if baby_count > 0%}
+	    <div>+유아 {{go_baby_price}}원 * {{baby_count}}명 </div>
+	    {% endif %}
+	    
+	    {% if select_round_or_one == "왕복"%}
+	    	<div>------------------------------</div>
+	    	<div>오는편</div>
+	    	<div>+어른 {{back_adult_price}}원 * {{adult_count}}명 </div>    
+	    	
+		    {% if youth_count > 0%}
+		    <div>+소아 {{back_youth_price}}원 * {{youth_count}}명 </div>
+		    {% endif %}
+		    
+		    {% if baby_count > 0%}
+		    <div>+유아 {{back_baby_price}}원 * {{baby_count}}명 </div>
+		    {% endif %}
+	    {% endif %}
+	    <div>------------------------------</div>
+	    <div>최종가격 : {{ result_price }} </div>
+    </div>
+	
+	<form method="post" id="choice_seat_form">
+	    {% csrf_token %}
+		{% bootstrap_form form %}
+        <button class="btn btn-primary">결제</button>
+    </form>
+{% endblock %}

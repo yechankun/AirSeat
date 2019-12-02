@@ -150,8 +150,8 @@ class FlightSchedule(models.Model):
     id_aircraft = models.ForeignKey(Aircraft, models.DO_NOTHING, db_column='id_aircraft')
     depart_airport = models.ForeignKey(Airport, models.DO_NOTHING, db_column='depart_airport', related_name='FLIGHT_SCHEDULE_FK_AIRPORT1')
     arrive_airport = models.ForeignKey(Airport, models.DO_NOTHING, db_column='arrive_airport', related_name='FLIGHT_SCHEDULE_FK_AIRPORT2')
-    depart_time = models.DateField()
-    arrive_time = models.DateField()
+    depart_time = models.DateTimeField()
+    arrive_time = models.DateTimeField()
     economy_price = models.FloatField()
     business_price = models.FloatField()
 
@@ -163,8 +163,8 @@ class FlightSchedule(models.Model):
 class Order(models.Model):
     id_seat = models.ForeignKey('Seat', models.DO_NOTHING, db_column='id_seat', primary_key=True)
     id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
-    id_flight_schedule = models.ForeignKey(FlightSchedule, models.DO_NOTHING, db_column='id_flight_schedule')
     is_adult = models.BooleanField()
+    price = models.FloatField()
 
     class Meta:
         managed = False
@@ -173,7 +173,7 @@ class Order(models.Model):
 
 class Seat(models.Model):
     id = models.FloatField(primary_key=True)
-    id_aircraft = models.ForeignKey(Aircraft, models.DO_NOTHING, db_column='id_aircraft')
+    id_flight = models.ForeignKey(FlightSchedule, models.DO_NOTHING, db_column='id_flight')
     seat_col = models.CharField(max_length=1)
     seat_num = models.IntegerField()
     seat_grade = models.BooleanField()

@@ -1,0 +1,22 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block extra_css %}
+{{ form.media.css }}
+{% endblock %}
+
+{% block extra_js %}
+{{ form.media.js }}
+{% endblock %}
+
+{% block content %}
+	<form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+       	
+        <button class="btn btn-primary">예매 취소하기</button>
+
+    </form>
+{% endblock %}

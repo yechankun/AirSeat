@@ -20,10 +20,12 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^AirSeatApp/', include('AirSeatApp.urls')),
-
     url(r'^$', views.MainPageView.as_view(), name='index'),
+    url(r'^choice/$', views.ChoicePageView.as_view(), name='choice'),
 #     url(r'^test$', views.test, name='test'),
+    url(r'^choice_seat/$', views.ChoiceSeatPageView.as_view(), name='choice_seat'),
+    url(r'^payment/$', views.PaymentPageView.as_view(), name='payment'),
+    url(r'^reservation_list/$', views.ReservationListView.as_view(), name='reservation_list'),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', admin.site.urls)
 ]

@@ -1,0 +1,29 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}	
+	{% bootstrap_form_errors form %}
+    <p>유형: {{select_round_or_one}}</p>
+    <p>좌석등급: {{seat_grade}}</p>
+    <p>성인: {{adult_count}}명, 소아: {{youth_count}}명, 유아: {{ baby_count }}명</p>
+    <p>출발지: {{depart_airport}}  도착지: {{arrive_airport}}</p>
+     
+	<form method="post" id="choice_seat_form">
+
+        {% csrf_token %}
+        <p>가는날: {{go_depart_time}}</p>
+        <p>가는편 비행기: {{choice_aircraft_id}}</p>
+
+   	 	{% bootstrap_field form.choice_seat %}
+
+    	{% if select_round_or_one == "왕복"%}
+       		<p>오는날: {{back_depart_time}}</p>
+      		<p>오는편 비행기: {{choice_aircraft_id2}}</p>
+
+	   	 	{% bootstrap_field form.choice_seat2 %}
+    	{% endif %}
+
+        <button class="btn btn-primary">선택 완료</button>
+    </form>
+{% endblock %}
