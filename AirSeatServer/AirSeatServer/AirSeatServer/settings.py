@@ -107,6 +107,10 @@ DATABASES = {
     }
 }
 
+# 허용할 도메인 입력
+# ALLOWED_HOSTS = ['nave.io'] 예시
+ALLOWED_HOSTS = ['redniche.iptime.org'] #예찬 IPTIME 
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

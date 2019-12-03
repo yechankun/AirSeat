@@ -51,7 +51,9 @@ class ChoiceSeatWidget(forms.CheckboxSelectMultiple):
             output.append(u'<tr>')
             
             # Normalize to strings
-            
+            if(num==int(len(self.col_list)/2)):
+                output.append(u'<tr><td>　</td></tr>')
+                
             if(num<len(self.col_list)):
                 output.append(u'<td>%s</td>' % self.col_list[num])
             
