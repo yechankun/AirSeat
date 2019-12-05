@@ -12,11 +12,38 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+    * {
+            font-family : Arial, Helvetica, sans-serif;
+        }
+    .addQuestion{
+            background-color: white;
+            width: 100%;
+            color: black;
+            margin: 30px 0;
+            overflow: hidden;
+            padding: 30px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+    .btn-outline-info:hover{
+        background-color: #f8f9fa;
+        outline-color: #f8f9fa;
+        color: #17a2b8;
+    }
+
+</style>
+    <div class="addQuestion">
 	<form method="post">
+        <div class="btn btn-outline-info">
         {% csrf_token %}
         {% bootstrap_form form %}
+            </div>
        	
-        <button class="btn btn-primary">예매 취소하기</button>
+        <div class="addQuestion">
+        <button class="btn btn-info" style="align-content: center">예매 취소하기</button></div>
 
-    </form>
+    </form></div>
 {% endblock %}

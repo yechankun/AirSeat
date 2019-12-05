@@ -12,6 +12,23 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+    * {
+            font-family : Arial, Helvetica, sans-serif;
+        }
+    .addQuestion{
+            background-color: white;
+            width: 100%;
+            color: black;
+            margin: 10px 0;
+            overflow: hidden;
+            padding: 10px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+    </style>
 	<!--
     {% if request.user.is_authenticated %}
 
@@ -48,9 +65,9 @@
 	<form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-       	
-        <button class="btn btn-primary">검색</button>
+        <div class="addQuestion" >
+            <button class="btn btn-info" style="align-content: center">검색</button></div>
 
     </form>
-    
+
 {% endblock %}

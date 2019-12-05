@@ -3,7 +3,48 @@
 {% load bootstrap4 %}
 
 {% block content %}
-	<dev class='status'>
+    <style>
+        * {
+            font-family : Arial, Helvetica, sans-serif;
+        }
+        .mt-3{
+            width: 50%;
+            height: auto;
+            padding: 20px;
+            align-content: center;
+        }
+        #main{
+            padding: 20px 0;
+            margin: 20px;
+            width: 100%;
+            align-content: center;
+        }
+        .status{
+            text-align: center;
+        }
+        .result_price{
+            text-align: center;
+        }
+        .addQuestion{
+            background-color: white;
+            width: 100%;
+            color: black;
+            margin: 30px 0;
+            overflow: hidden;
+            padding: 30px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+    .btn-outline-info{
+        width: 100%;
+    }
+    </style>
+
+    <div id="main" style="align-content: center">
+    <div class="btn btn-outline-info">
+	<div class='status'>
 		<div>유형: {{select_round_or_one}}</div>
 	    <div>좌석등급: {{seat_grade}}</div>
 	    <div>성인: {{adult_count}}명, 소아: {{youth_count}}명, 유아: {{ baby_count }}명</div>
@@ -31,8 +72,7 @@
 			</div>
 			<div>오는날: {{back_depart_time}}</div>
 	    {% endif %}
-    </dev>
-    
+    </div><br>
     <div class='result_price'>
 	    <div class='header'> 가격 </div>
 	    <div> 가는편</div>
@@ -61,11 +101,12 @@
 	    {% endif %}
 	    <div>------------------------------</div>
 	    <div>최종가격 : {{ result_price }} </div>
-    </div>
-	
+    </div></div><br><br>
 	<form method="post" id="choice_seat_form">
-	    {% csrf_token %}
-		{% bootstrap_form form %}
-        <button class="btn btn-primary">결제</button>
-    </form>
+        <div id="key">
+        {% csrf_token %}
+            {% bootstrap_form form %}</div>
+        <div class="addQuestion">
+        <button class="btn btn-info" style="align-content: center">결제</button></div>
+    </form></div>
 {% endblock %}

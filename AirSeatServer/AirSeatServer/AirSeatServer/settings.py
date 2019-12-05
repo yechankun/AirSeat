@@ -30,7 +30,7 @@ SECRET_KEY = '+hl!9=bs!e83_io_pg3_d@$h-7&gu9(*7xyt(x=o+gnpm7z%ai'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1:8000']
 
 SITE_ID = 1
 
@@ -109,7 +109,7 @@ DATABASES = {
 
 # 허용할 도메인 입력
 # ALLOWED_HOSTS = ['nave.io'] 예시
-ALLOWED_HOSTS = ['redniche.iptime.org'] #예찬 IPTIME 
+ALLOWED_HOSTS = ['redniche.iptime.org', '127.0.0.1'] #예찬 IPTIME
 
 
 # Password validation
