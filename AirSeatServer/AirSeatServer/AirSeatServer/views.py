@@ -154,19 +154,9 @@ class ChoiceSeatPageView(FormView):
     
 class PaymentPageView(FormView):
     template_name = 'main/payment.html'
-    form_class = PaymentPage
-    
-    def __init__(self, **kwargs):
-        super(PaymentPageView, self).__init__(**kwargs)
-        self.go_adult_price = 0
-        self.go_youth_price = 0
-        self.go_baby_price  = 0
-        self.back_adult_price = 0
-        self.back_youth_price = 0
-        self.back_baby_price  = 0
+    form_class = PaymentPage        
         
-        
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         request = self.request
         
         if not request.user.is_authenticated:
@@ -175,31 +165,26 @@ class PaymentPageView(FormView):
         adult_count = adult_count2 = request.session['adult_count']
         youth_count = youth_count2 = request.session['youth_count']
         #baby_count = request.session['baby_count']
-        
-        grade_dict = {'이코노미':'economy_price', '비지니스':'business_price'}
-        go_price= FlightSchedule.objects.get(id=request.session['choice_aircraft']).__dict__[grade_dict[request.session['seat_grade']]]
-        
-        self.go_adult_price = go_price
-        self.go_youth_price = int(self.go_adult_price * 0.5)
-        self.go_baby_price = 0
-        
-        back_price= FlightSchedule.objects.get(id=request.session['choice_aircraft2']).__dict__[grade_dict[request.session['seat_grade']]]
-        self.back_adult_price = back_price
-        self.back_youth_price = int(self.back_adult_price * 0.5)
-        self.back_baby_price = 0
+        data = self.get_context_data(**kwargs)
+        go_adult_price = data['go_adult_price']
+        go_youth_price = data['go_youth_price']
+        go_baby_price  = data['go_baby_price']
+        back_adult_price = data['back_adult_price']
+        back_youth_price = data['back_youth_price']
+        back_baby_price  = data['back_baby_price']
         
         #DB에 저장
         query = Seat.objects.filter(pk__in=request.session['choice_seat'])
         user = AuthUser.objects.get(id=request.user.id)
         for val in query:
             if adult_count>0:
-                order = Order.objects.create(id_seat=val , id_user=user , is_adult=0, price=self.go_adult_price)
+                order = Order.objects.create(id_seat=val , id_user=user , is_adult=0, price=go_adult_price)
                 adult_count -= 1
             elif youth_count>0:
-                order = Order.objects.create(id_seat=val , id_user=user , is_adult=1, price=self.go_youth_price)
+                order = Order.objects.create(id_seat=val , id_user=user , is_adult=1, price=go_youth_price)
                 youth_count -= 1
             else:
-                order = Order.objects.create(id_seat=val , id_user=user , is_adult=2, price=self.go_baby_price)
+                order = Order.objects.create(id_seat=val , id_user=user , is_adult=2, price=go_baby_price)
             
             order.save()
             val.reservatied=1
@@ -210,13 +195,13 @@ class PaymentPageView(FormView):
             query2 = Seat.objects.filter(pk__in=request.session['choice_seat2'])
             for val in query2:
                 if adult_count2>0:
-                    order = Order.objects.create(id_seat=val , id_user=user , is_adult=0, price=self.back_adult_price)
+                    order = Order.objects.create(id_seat=val , id_user=user , is_adult=0, price=back_adult_price)
                     adult_count2 -= 1
                 elif youth_count2>0:
-                    order = Order.objects.create(id_seat=val , id_user=user , is_adult=1, price=self.back_youth_price)
+                    order = Order.objects.create(id_seat=val , id_user=user , is_adult=1, price=back_youth_price)
                     youth_count2 -= 1
                 else:
-                    order = Order.objects.create(id_seat=val , id_user=user , is_adult=2, price=self.back_baby_price)
+                    order = Order.objects.create(id_seat=val , id_user=user , is_adult=2, price=back_baby_price)
                 
                 order.save()
                 val.reservatied=1
@@ -263,16 +248,29 @@ class PaymentPageView(FormView):
         go_sum_price=0
         back_sum_price=0        
         
-        data['go_adult_price'] = self.go_adult_price
-        data['go_youth_price'] = self.go_youth_price
-        data['go_baby_price'] = self.go_baby_price
         
-        go_sum_price = data['adult_count'] * self.go_adult_price + \
-                        data['youth_count'] * self.go_youth_price + \
-                        data['baby_count'] * self.go_baby_price
+        grade_dict = {'이코노미':'economy_price', '비지니스':'business_price'}
+        go_price= FlightSchedule.objects.get(id=request.session['choice_aircraft']).__dict__[grade_dict[request.session['seat_grade']]]
+        
+        go_adult_price = go_price
+        go_youth_price = int(go_adult_price * 0.5)
+        go_baby_price = 0
+        
+        back_price= FlightSchedule.objects.get(id=request.session['choice_aircraft2']).__dict__[grade_dict[request.session['seat_grade']]]
+        back_adult_price = back_price
+        back_youth_price = int(back_adult_price * 0.5)
+        back_baby_price = 0
+        
+        data['go_adult_price'] = go_adult_price
+        data['go_youth_price'] = go_youth_price
+        data['go_baby_price'] = go_baby_price
+        
+        go_sum_price = data['adult_count'] * go_adult_price + \
+                        data['youth_count'] * go_youth_price + \
+                        data['baby_count'] * go_baby_price
         
         #왕복일 경우
-        if(request.session['select_round_or_one'] == '왕복'):
+        if(data['select_round_or_one'] == '왕복'):
             data['choice_seat2'] = request.session['choice_seat2']
             choice_seat_list2 = Seat.objects.filter(
                 pk__in=data['choice_seat2']).values_list('seat_col', 'seat_num')
@@ -282,13 +280,13 @@ class PaymentPageView(FormView):
             data['back_depart_time'] = request.session['back_depart_time']
             data['choice_aircraft_id2'] = request.session['choice_aircraft_id2']
 
-            data['back_adult_price'] = self.back_adult_price
-            data['back_youth_price'] = self.back_youth_price
-            data['back_baby_price'] = self.back_baby_price
+            data['back_adult_price'] = back_adult_price
+            data['back_youth_price'] = back_youth_price
+            data['back_baby_price'] = back_baby_price
             
-            back_sum_price = data['adult_count'] * self.back_adult_price + \
-                        data['youth_count'] * self.back_youth_price + \
-                        data['baby_count'] * self.back_baby_price
+            back_sum_price = data['adult_count'] * back_adult_price + \
+                        data['youth_count'] * back_youth_price + \
+                        data['baby_count'] * back_baby_price
             
 
         result_price = go_sum_price + back_sum_price
