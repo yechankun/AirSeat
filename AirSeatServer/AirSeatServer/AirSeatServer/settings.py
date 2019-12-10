@@ -30,15 +30,15 @@ SECRET_KEY = '+hl!9=bs!e83_io_pg3_d@$h-7&gu9(*7xyt(x=o+gnpm7z%ai'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
+
 ALLOWED_HOSTS = ['127.0.0.1:8000']
 
-=======
+
 # 허용할 도메인 입력
 # ALLOWED_HOSTS = ['nave.io'] 예시
 ALLOWED_HOSTS = ['redniche.iptime.org',
 		'localhost'] #예찬 IPTIME 
->>>>>>> dev
+
 SITE_ID = 1
 
 # Application definition
@@ -116,13 +116,9 @@ DATABASES = {
     }
 }
 
-<<<<<<< HEAD
 # 허용할 도메인 입력
 # ALLOWED_HOSTS = ['nave.io'] 예시
 ALLOWED_HOSTS = ['redniche.iptime.org', '127.0.0.1'] #예찬 IPTIME
-
-=======
->>>>>>> dev
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

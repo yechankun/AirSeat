@@ -21,6 +21,7 @@
             width: 100%;
             color: black;
             margin: 10px 0;
+            top: 50px;
             overflow: hidden;
             padding: 10px 0;
             align-items: center;
@@ -29,38 +30,7 @@
             float: none;
         }
     </style>
-	<!--
-    {% if request.user.is_authenticated %}
 
-        {% trans 'Your username is' %} <b>{{ request.user.username }}</b>.
-
-    {% else %}
-
-        {% trans 'You are a guest.' %}
-
-    {% endif %}
-    <select name="depart_airport">
-    <option value="">출발지</option>
-    	{% if aircraft_depart_list %}
-	    {% for aircraft in aircraft_depart_list %}
-	    	<option value="{{ aircraft.depart_airport }}">{{ aircraft.depart_airport }}</option>
-	    {% endfor %}
-		{% endif %}
-	</select>
-	<select name="arrive_airport">
-	<option value="">도착지</option>
-    	{% if aircraft_arrive_list %}
-	    {% for aircraft in aircraft_arrive_list %}
-	    	<option value="{{ aircraft.arrive_airport }}">{{ aircraft.arrive_airport }}</option>
-	    {% endfor %}
-		{% endif %}
-	</select>
-	
-	
-   	<div class="alert alert-error">
-        <strong>{{ kkkk }}</strong>
-    </div>
-   	-->
 
 	<form method="post">
         {% csrf_token %}
