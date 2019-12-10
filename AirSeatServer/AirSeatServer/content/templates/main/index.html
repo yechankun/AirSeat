@@ -35,6 +35,11 @@
 	<form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
+        {% for field in form %}
+            {% if field.name == 'baby_count' and field.name == 'arrive_airport' %}
+            {% bootstrap_field field %}<br><br>
+            {% endif %}
+        {% endfor %}
         <div class="addQuestion" >
             <button class="btn btn-info" style="align-content: center">검색</button></div>
 
