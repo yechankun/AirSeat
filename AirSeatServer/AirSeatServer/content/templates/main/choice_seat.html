@@ -1,0 +1,133 @@
+{% extends 'layouts/default/page.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <style>
+        * {
+            font-family : Arial, Helvetica, sans-serif;
+        }
+        .addQuestion{
+            background-color: white;
+            width: 100%;
+            color: black;
+            margin: 10px 0;
+            overflow: hidden;
+            padding: 10px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+        .btn-info{
+            width: 100%;
+            color: black;
+            margin: 0px 0;
+            margin-bottom: 50px;
+            overflow: hidden;
+            padding: 30px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+        .btn-outline-info{
+            background-color: #f8f9fa;
+            outline-color: #f8f9fa;
+            color: #17a2b8;
+        }
+        .btn-outline-info:hover{
+            background-color: #f8f9fa;
+            outline-color: #f8f9fa;
+            color: #17a2b8;
+        }
+    .seat{
+        margin: 10px;
+        border: #17a2b8 1px;
+    }
+    #seatsBlock td {
+        padding: 10px;
+    }
+    input[type=checkbox] {
+    width: 13px;
+    margin-right: 0px;
+    cursor: pointer;
+}
+    .displayerBoxes {
+    margin-top: 2em;
+}
+
+    input[type="text"]{
+        padding: 10px 15px;
+        width: 100%;
+    }
+
+    input[type=checkbox]:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 5px;
+    /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+    -webkit-border-radius: 5px;
+    /* Firefox 1-3.6 */
+    -moz-border-radius: 5px;
+    display: block;
+    vertical-align: middle;
+    text-align: center;
+    border: 3px solid #ff9800;
+    background-color: #ffffff;
+}
+    table {
+    text-align: left;
+}
+    input[type=checkbox]:checked:before {
+    background-color: Green;
+    font-size: 10px;
+}
+    .form-group td{
+    width: 100%;
+    padding: 7px 10px;
+    color: #000;
+    font-weight: 600;
+}
+    </style>
+
+
+
+
+	{% bootstrap_form_errors form %}
+    <div class="btn btn-info">
+        <p class="btn btn-outline-info"><strong style="font-size: 20px">유형</strong> &nbsp; <span style="color: #5a6268;">{{select_round_or_one}}</span></p>
+        <p class="btn btn-outline-info"><strong style="font-size: 20px">좌석등급</strong> &nbsp; <span style="color: #5a6268;">{{seat_grade}}</span></p>
+        <p class="btn btn-outline-info"><strong style="font-size: 20px">성인</strong> &nbsp; <span style="color: #5a6268;">{{adult_count}}명 &nbsp;&nbsp;&nbsp;</span><strong style="font-size: 20px">소아</strong> &nbsp; <span style="color: #5a6268;">{{youth_count}}명&nbsp;&nbsp;&nbsp;</span> <strong style="font-size: 20px">유아</strong> &nbsp; <span style="color: #5a6268;">{{ baby_count }}명</span></p>
+        <p class="btn btn-outline-info"><strong style="font-size: 20px">출발지</strong> &nbsp; <span style="color: #5a6268;">{{depart_airport}}</span> &nbsp;&nbsp;&nbsp; <strong style="font-size: 20px">도착지</strong> &nbsp; <span style="color: #5a6268;">{{arrive_airport}}</span></p></div>
+
+    <div class="addQuestion" style="padding-top: 0;">
+	<form method="post" id="choice_seat_form">
+
+        {% csrf_token %}
+    <div class="addQuestion">
+        <div style="width: 25%; align-content: center; margin: 10px 0; float: left">
+            <p class="btn btn-outline-info"><strong style="font-size: 20px">가는날</strong> &nbsp; <span style="color: #5a6268;">{{go_depart_time}}</span></p><br><br><br>
+            <p class="btn btn-outline-info"><strong style="font-size: 20px">가는편 비행기</strong> &nbsp; <span style="color: #5a6268;">{{choice_aircraft_id}}</span></p>
+        </div>
+        <div style="width: 60%; align-content: center; margin: 10px 0;">
+                {% bootstrap_field form.choice_seat %}
+        </div>
+    </div>
+    	{% if select_round_or_one == "왕복"%}
+            <br>
+    <div class="addQuestion">
+        <div style="width: 25%; align-content: center; margin: 10px 0; float: left">
+       		<p class="btn btn-outline-info" ><strong style="font-size: 20px">오는날</strong> &nbsp; <span style="color: #5a6268;">{{back_depart_time}}</span></p><br><br><br>
+      		<p class="btn btn-outline-info" ><strong style="font-size: 20px">오는편 비행기</strong> &nbsp; <span style="color: #5a6268;">{{choice_aircraft_id2}}</span></p>
+        </div>
+        <div style="width: 60%; align-content: center; margin: 10px 0;">
+                {% bootstrap_field form.choice_seat2 %}
+        </div>
+    </div>
+    	{% endif %}
+    <br><br>
+        <div class="addQuestion" >
+        <button class="btn btn-outline-info" style="align-content: center; background-color: #17a2b8; color: white">선택 완료</button>
+        </div></form></div>
+{% endblock %}

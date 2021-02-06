@@ -1,0 +1,49 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block extra_css %}
+{{ form.media.css }}
+{% endblock %}
+
+{% block extra_js %}
+{{ form.media.js }}
+{% endblock %}
+
+{% block content %}
+    <style>
+    * {
+            font-family : Arial, Helvetica, sans-serif;
+        }
+    .addQuestion{
+            background-color: white;
+            width: 100%;
+            color: black;
+            margin: 30px 0;
+            overflow: hidden;
+            padding: 30px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+    .btn-outline-info:hover{
+        background-color: #f8f9fa;
+        outline-color: #f8f9fa;
+        color: #17a2b8;
+    }
+
+</style>
+    <div class="addQuestion">
+	<form method="post">
+        <div class="btn btn-outline-info" style="color: black">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+            </div>
+       	
+        <div class="addQuestion">
+        <button class="btn btn-info" style="align-content: center">예매 취소하기</button></div>
+
+    </form></div>
+{% endblock %}

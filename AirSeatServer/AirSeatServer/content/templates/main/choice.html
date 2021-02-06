@@ -1,0 +1,49 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+
+	<style>
+		#embed-responsive embed-responsive-16by9
+		{
+            margin-top: 20px;
+		   width:500px;
+		   height:500px;
+		   overflow:hidden;
+		   position:relative;
+		}
+		
+		#embed-responsive-item
+		{
+		   position:absolute;
+		   width:40%;
+		   height:58%;
+		   overflow: hidden;
+		}
+    .addQuestion{
+            background-color: white;
+            width: 100%;
+            color: black;
+            margin: 10px 0;
+            overflow: hidden;
+            padding: 10px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+	</style>
+	<div id="embed-responsive embed-responsive-16by9" style="float: left; margin-top: 50px; margin-left: 10px;">
+        <p><strong style="font-size: 20px">가격 비교</strong></p>
+        <iframe src="{{naver_url}}" id="embed-responsive-item" frameborder="0"></iframe>
+	</div>
+
+	<form method="post" id="choice_form">
+    <div id="embed-responsive embed-responsive-16by9" style="float: right; margin-right: 10px; width: 54%">
+        <p class="btn btn-light"><strong style="font-size: 20px">{% csrf_token %}
+            {% bootstrap_form form %}</strong></p></div>
+       	<div class="addQuestion" >
+            <button class="btn btn-info" style="align-content: center">선택</button></div>
+    </form>
+{% endblock %}

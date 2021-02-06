@@ -1,0 +1,43 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+<style>
+    .mt-3{
+            width: 50%;
+            height: auto;
+            padding: 20px;
+            align-content: center;
+        }
+    .addQuestion{
+            background-color: white;
+            width: 100%;
+            color: black;
+            margin: 30px 0;
+            overflow: hidden;
+            padding: 30px 0;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
+            float: none;
+        }
+    * {
+            font-family : Arial, Helvetica, sans-serif;
+        }
+</style>
+    <br>
+    <h4 style="text-align: center"><strong>정보 수정</strong></h4><br><br>
+
+    <form method="post">
+
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        <div class="addQuestion">
+        <button class="btn btn-info" style="align-content: center">변경사항 적용</button></div>
+
+    </form>
+
+{% endblock %}
